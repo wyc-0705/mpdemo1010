@@ -22,5 +22,10 @@ public class User {
 
     @Version
     @TableField(fill = FieldFill.INSERT)//有默认值1
-    private Integer version;//版本号
+    private Integer version;//版本号 乐观锁
+
+    @TableLogic//逻辑删除
+    private Integer deleted;
+
+
 }
