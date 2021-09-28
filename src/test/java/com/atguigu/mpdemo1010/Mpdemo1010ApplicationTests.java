@@ -2,6 +2,7 @@ package com.atguigu.mpdemo1010;
 
 import com.atguigu.mpdemo1010.entity.User;
 import com.atguigu.mpdemo1010.mapper.UserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import net.minidev.json.JSONUtil;
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ class Mpdemo1010ApplicationTests {
         users.forEach(System.out::println);
 
     }
-
+    //mp实现分页
     @Test
     public void testPage(){
         //page对象
@@ -75,17 +76,49 @@ class Mpdemo1010ApplicationTests {
         System.out.println(page.hasNext());//是否有下页
         System.out.println(page.hasPrevious());//是否有上页
     }
-
+   //mp实现删除
     @Test
     public void deleteById(){
         int result = userMapper.deleteById(1442381288565972993L);
         System.out.println(result);
     }
 
+    //mp实现批量删除
     @Test
     public void testDeleteBatchIds(){
         int result = userMapper.deleteBatchIds(Arrays.asList(1, 2)); //批量删除
         System.out.println(result);
+    }
+    //mp实现复杂查询
+    @Test
+    public void testDelete(){
+        //创建对象
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+
+        //设置条件 ge gt le lt 大于等于 大于 小于等于 小于
+        //age大于等于三十
+        //wrapper.ge("age",30);//字段和值
+
+        //eq ne 等于 不等于
+        //wrapper.ne("name","Tom");
+
+        //between
+        //wrapper.between("age",20,30);
+
+        //like 模糊查询
+        //wrapper.like("name","wy");
+
+        //orderByDecs 排序
+        //wrapper.orderByDesc("id");//降序
+
+        //last
+        //wrapper.last("limit 3");//limit 限制查询的个数
+
+        //指定列查询 比如只查id name
+        wrapper.select("id","name");
+        List<User> users = userMapper.selectList(wrapper);
+        System.out.println(users);
+
     }
 
 
